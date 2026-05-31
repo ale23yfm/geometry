@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry Cheat Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #181714;
+    --border: #2e2b26;
+    --accent: #c8a96e;
+    --accent2: #7eb8a4;
+    --accent3: #d4786a;
+    --text: #e8e2d6;
+    --muted: #8a8070;
+    --formula-bg: #141210;
+    --ch1: #b8a0d4;
+    --ch2: #7eb8c8;
+    --ch3: #c8a96e;
+    --ch4: #d4a078;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 32px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { font-size: 2rem; font-weight: 600; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 4px; }
+  header p { color: var(--muted); font-style: italic; font-size: 0.9rem; }
+
+  h3.chapter-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+    margin: 28px 0 14px;
+    display: inline-block;
+  }
+  h3.ch1 { background: #1e1830; color: var(--ch1); }
+  h3.ch2 { background: #0f2228; color: var(--ch2); }
+  h3.ch3 { background: #2a2010; color: var(--ch3); }
+  h3.ch4 { background: #2a1a0a; color: var(--ch4); }
+  h3.ch5 { background: #201810; color: var(--accent); }
+  h3.ch6 { background: #0f2018; color: var(--accent2); }
+  h3.ch8 { background: #2a1010; color: var(--accent3); }
+  h3.ch9 { background: #181830; color: #a09fcc; }
+  h3.ch10 { background: #102010; color: #8abf8a; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .full { grid-column: 1 / -1; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+  }
+  .card h2 {
+    font-size: 0.68rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card.ch1 h2 { color: var(--ch1); }
+  .card.ch2 h2 { color: var(--ch2); }
+  .card.ch3 h2 { color: var(--ch3); }
+  .card.ch4 h2 { color: var(--ch4); }
+  .card.ch5 h2 { color: var(--accent); }
+  .card.ch6 h2 { color: var(--accent2); }
+  .card.ch8 h2 { color: var(--accent3); }
+  .card.ch9 h2 { color: #a09fcc; }
+  .card.ch10 h2 { color: #8abf8a; }
+
+  .formula {
+    background: var(--formula-bg);
+    border-left: 2px solid var(--border);
+    border-radius: 3px;
+    padding: 7px 11px;
+    margin: 7px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    color: #d4cfc5;
+    white-space: pre-wrap;
+    line-height: 1.7;
+  }
+  .formula.ch1 { border-left-color: var(--ch1); }
+  .formula.ch2 { border-left-color: var(--ch2); }
+  .formula.ch3 { border-left-color: var(--ch3); }
+  .formula.ch4 { border-left-color: var(--ch4); }
+  .formula.ch5 { border-left-color: var(--accent); }
+  .formula.ch6 { border-left-color: var(--accent2); }
+  .formula.ch8 { border-left-color: var(--accent3); }
+  .formula.ch9 { border-left-color: #a09fcc; }
+  .formula.ch10 { border-left-color: #8abf8a; }
+
+  p { margin: 5px 0; font-size: 0.9rem; }
+  ul { margin: 5px 0 5px 16px; }
+  li { margin: 2px 0; font-size: 0.88rem; }
+
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 9px;
+    margin-bottom: 1px;
+  }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row .formula { flex: 1; min-width: 160px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 7px 0; font-size: 0.8rem; }
+  th { font-family: 'JetBrains Mono', monospace; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 3px 7px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 3px 7px; border-bottom: 1px solid #1e1c18; font-size: 0.83rem; }
+  td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.73rem; color: var(--accent); }
+  tr:last-child td { border-bottom: none; }
+
+  .sep { height: 1px; background: var(--border); margin: 10px 0; }
+  em { color: var(--accent); font-style: normal; font-weight: 600; }
+  strong { color: var(--text); font-weight: 600; }
+
+  .chapter-block {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    background: var(--surface);
+  }
+
+  @media (max-width: 750px) {
+    .grid, .grid3 { grid-template-columns: 1fr; }
+    .full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Geometry — Complete Cheat Sheet</h1>
+  <p>Chapters 1–6 · 8 · 9 · 10 &nbsp;·&nbsp; iulian.simion@ubbcluj.ro</p>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 1 — AFFINE SPACE
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch1">Chapter 1 — Affine Space &amp; Coordinates</h3>
+<div class="grid">
+
+  <div class="card ch1">
+    <h2>Affine Space Basics</h2>
+    <p>An affine space <strong>A</strong> = set of points + vector space <strong>V</strong> = D(A) with maps:</p>
+    <div class="formula ch1">□ − □ : A × A → V    (two points give a vector)
+□ + □ : V × A → A    (vector moves a point)
+Axioms: 0+P=P,  (v+w)+P=v+(w+P),
+        (A−B)+B=A,  (v+P)−P=v</div>
+    <div class="label">Affine subspace of dimension d</div>
+    <div class="formula ch1">S = {Q + t₁v₁ + ··· + t_d v_d : tᵢ ∈ ℝ}
+D(S) = direction space (d-dim vector subspace)
+• dim 0 = point,  dim 1 = line
+• dim 2 = plane,  dim n−1 = hyperplane</div>
+    <div class="label">Parallel subspaces</div>
+    <div class="formula ch1">S ∥ T  ⟺  D(S) ⊆ D(T) or D(T) ⊆ D(S)
+Through any point Q ∃! subspace ∥ S with same dim</div>
+    <div class="label">Dimension of intersection (Grassmann)</div>
+    <div class="formula ch1">dim(S)+dim(T)−n ≤ dim(S∩T) ≤ min{dim S, dim T}
+Equality on left ⟺ D(S)+D(T) = Vₙ</div>
+  </div>
+
+  <div class="card ch1">
+    <h2>Cartesian Frames &amp; Coordinates</h2>
+    <div class="label">Frame K = (O, B), basis B = (i₁,…,iₙ)</div>
+    <div class="formula ch1">P(x₁,…,xₙ):  OP = x₁i₁ + ··· + xₙiₙ
+[P]_K = column matrix of coordinates</div>
+    <div class="label">Change of frame  K→K′ = (O′, B′)</div>
+    <div class="formula ch1">[P]_{K′} = M_{B′,B} · ([P]_K − [O′]_K)
+
+Steps:
+1. Build M_{B,B′}: columns = [i′ⱼ]_B
+2. Invert: M_{B′,B} = (M_{B,B′})⁻¹
+3. Apply formula above</div>
+    <div class="label">Orientation</div>
+    <div class="formula ch1">det(M_{E,F}) > 0  ⟹  same orientation
+det(M_{E,F}) < 0  ⟹  opposite orientation
+Right-hand rule in E³ fixes orientation</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 2 — AFFINE SUBSPACES
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch2">Chapter 2 — Lines, Planes, Hyperplanes</h3>
+<div class="grid">
+
+  <div class="card ch2">
+    <h2>Equations of Lines &amp; Planes</h2>
+    <div class="label">Line in Aⁿ — parametric (base point Q, direction v)</div>
+    <div class="formula ch2">OP = OQ + t·v,   t ∈ ℝ
+i.e.  xᵢ = qᵢ + t·vᵢ  for each i</div>
+    <div class="label">Line in Aⁿ — symmetric / Cartesian</div>
+    <div class="formula ch2">(x₁−q₁)/v₁ = (x₂−q₂)/v₂ = ··· = (xₙ−qₙ)/vₙ
+(n−1 linear equations = intersection of n−1 hyperplanes)</div>
+    <div class="label">Plane in A³ — parametric</div>
+    <div class="formula ch2">OP = OQ + s·v + t·w,   s,t ∈ ℝ</div>
+    <div class="label">Plane in A³ — Cartesian (normal n=(a,b,c))</div>
+    <div class="formula ch2">ax + by + cz + d = 0
+Intercept form: x/α + y/β + z/γ = 1</div>
+    <div class="label">Hyperplane in Aⁿ</div>
+    <div class="formula ch2">H : a₁x₁ + ··· + aₙxₙ + aₙ₊₁ = 0
+Normal vector: a = (a₁,…,aₙ)
+Direction space D(H): a₁x₁+···+aₙxₙ = 0</div>
+  </div>
+
+  <div class="card ch2">
+    <h2>Relative Positions</h2>
+    <div class="label">Two lines in A² (solve system)</div>
+    <div class="formula ch2">Unique point:    rank = 2  (intersect)
+No solution:     rank < rank(extended)  (parallel)
+∞ solutions:     ℓ₁ = ℓ₂</div>
+    <div class="label">Two planes in A³</div>
+    <div class="formula ch2">Intersect in line: rank(M) = rank(M̃) = 2
+Parallel:         rank(M) < rank(M̃)
+Equal:            rank(M) = rank(M̃) = 1</div>
+    <div class="label">Two lines in A³ (via parametric)</div>
+    <div class="formula ch2">Parallel:    direction vectors v ∥ u
+Intersect:   not parallel AND
+             |x₁−x₂  y₁−y₂  z₁−z₂|
+             |vx      vy      vz   | = 0
+             |ux      uy      uz   |
+Skew:        not parallel, det ≠ 0 (no common point)</div>
+    <div class="label">Line ℓ and plane π in A³</div>
+    <div class="formula ch2">avx+bvy+cvz = 0 and P₀∉π  → parallel (no meet)
+avx+bvy+cvz = 0 and P₀∈π  → ℓ ⊆ π
+avx+bvy+cvz ≠ 0            → unique intersection
+  t₀ = −(ax₀+by₀+cz₀+d)/(avx+bvy+cvz)</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 3 — EUCLIDEAN SPACE
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch3">Chapter 3 — Euclidean Space, Scalar Product, Distance</h3>
+<div class="grid">
+
+  <div class="card ch3">
+    <h2>Scalar Product &amp; Angles</h2>
+    <div class="label">Scalar product (orthonormal basis)</div>
+    <div class="formula ch3">⟨a, b⟩ = a₁b₁ + ··· + aₙbₙ = aᵀ·b
+|a| = √⟨a,a⟩ = √(a₁²+···+aₙ²)
+cos∡(a,b) = ⟨a,b⟩ / (|a|·|b|)
+a ⊥ b  ⟺  ⟨a,b⟩ = 0</div>
+    <div class="label">Orthogonal projection of b onto a</div>
+    <div class="formula ch3">Pr⊥_a(b) = (⟨a,b⟩/⟨a,a⟩) · a = (⟨a,b⟩/|a|²) · a</div>
+    <div class="label">Orthonormal frame: B = (e₁,…,eₙ), ⟨eᵢ,eⱼ⟩=δᵢⱼ</div>
+    <div class="label">Normal vector to hyperplane H: a₁x₁+···+aₙxₙ=b</div>
+    <div class="formula ch3">n = (a₁,…,aₙ)   is normal to H
+P ∈ H  ⟺  ⟨n, QP⟩ = 0  for any Q ∈ H</div>
+    <div class="label">Angles between objects (orthonormal frame)</div>
+    <div class="formula ch3">2 lines (dir. v₁,v₂):    cos θ = ⟨v₁,v₂⟩/(|v₁||v₂|)
+2 planes (norm. n₁,n₂): cos θ = ⟨n₁,n₂⟩/(|n₁||n₂|)
+Line–plane (dir v, norm n):
+  acute angle = π/2 − arccos(⟨v,n⟩/(|v||n|))</div>
+    <div class="label">Gram-Schmidt (orthonormalize basis {e₁,…,eₙ})</div>
+    <div class="formula ch3">e′₁ = e₁
+e′₂ = e₂ − Pr⊥_{e′₁}(e₂)
+e′₃ = e₃ − Pr⊥_{e′₁}(e₃) − Pr⊥_{e′₂}(e₃)
+Then normalize: ê_i = e′_i / |e′_i|</div>
+  </div>
+
+  <div class="card ch3">
+    <h2>Distances</h2>
+    <div class="label">Distance between two points</div>
+    <div class="formula ch3">d(P,Q) = |PQ| = √((p₁−q₁)²+···+(pₙ−qₙ)²)</div>
+    <div class="label">Distance: point P to hyperplane H: aᵀx = b</div>
+    <div class="formula ch3">d(P,H) = |a₁p₁+···+aₙpₙ − b| / √(a₁²+···+aₙ²)
+       = |aᵀP + aₙ₊₁| / |a|
+(where H: aᵀx + aₙ₊₁ = 0)</div>
+    <div class="label">Distance: point P to line ℓ in E³ (dir. v, through A)</div>
+    <div class="formula ch3">d(P, ℓ) = |AP × v| / |v|</div>
+    <div class="label">Distance: two parallel lines ℓ ∥ ℓ′ (B on ℓ′)</div>
+    <div class="formula ch3">d(ℓ, ℓ′) = |AB × v| / |v|</div>
+    <div class="label">Distance: two skew lines (A∈ℓ, B∈ℓ′, dir. v, w)</div>
+    <div class="formula ch3">d(ℓ, ℓ′) = |⟨v×w, AB⟩| / |v×w|
+           = |[v, w, AB]| / |v×w|</div>
+    <div class="label">Locus at distance c from S (c > 0)</div>
+    <div class="formula ch3">From a point  → sphere of radius c
+From a line (E³) → cylinder of radius c
+From a hyperplane → two parallel hyperplanes</div>
+    <div class="label">Locus equidistant from two objects</div>
+    <div class="formula ch3">2 points   → perpendicular bisecting hyperplane
+point + hyperplane → paraboloid (or parabola in E²)
+2 hyperplanes → angle bisecting planes</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 4 — AREA, CROSS PRODUCT, VOLUME
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch4">Chapter 4 — Area, Cross Product &amp; Volume</h3>
+<div class="grid">
+
+  <div class="card ch4">
+    <h2>Area &amp; Oriented Area (E²)</h2>
+    <div class="label">Area of parallelogram ABCD (v=AB, w=AD)</div>
+    <div class="formula ch4">Area(ABCD) = |vx·wy − vy·wx|
+           = |det[v w]|
+           = |xA yA 1|
+             |xB yB 1|
+             |xD yD 1|</div>
+    <div class="label">Oriented area (box product in E²)</div>
+    <div class="formula ch4">[v, w] = vx·wy − vy·wx = det([v | w])
+Areaₒᵣ(ABCD) = [v, w]
+Areaₒᵣ(△ABC) = [v, w] / 2
+sin∡ₒᵣ(v,w) = [v,w] / (|v|·|w|)</div>
+    <div class="label">Operator J (rotation by +90° in E²)</div>
+    <div class="formula ch4">J(v) ⊥ v,  |J(v)| = |v|,  (v, J(v)) right-oriented
+J(vx, vy) = (−vy, vx)
+sin∡ₒᵣ(a,b) = pr⊥_{J(a)}(b) / |b|</div>
+  </div>
+
+  <div class="card ch4">
+    <h2>Cross Product &amp; Volume (E³)</h2>
+    <div class="label">Cross product a × b (right-hand rule)</div>
+    <div class="formula ch4">a × b = | i   j   k  |
+           | a₁  a₂  a₃ |
+           | b₁  b₂  b₃ |
+= (a₂b₃−a₃b₂, a₃b₁−a₁b₃, a₁b₂−a₂b₁)
+
+|a×b| = |a||b|sin∡(a,b)  = Area(parallelogram)
+a×b ⊥ a,  a×b ⊥ b,  a ∥ b ⟺ a×b = 0
+a×b = −b×a  (skew-symmetric)
+Bilinear: (αu+βv)×w = α(u×w)+β(v×w)</div>
+    <div class="label">Double cross formula</div>
+    <div class="formula ch4">(a×b)×c = ⟨a,c⟩b − ⟨b,c⟩a</div>
+    <div class="label">Box product [a,b,c] = ⟨a×b, c⟩ (mixed product)</div>
+    <div class="formula ch4">[a,b,c] = |a₁ a₂ a₃|
+             |b₁ b₂ b₃|
+             |c₁ c₂ c₃|
+
+Vol(parallelepiped) = |[a,b,c]|
+Vol(tetrahedron ABCD) = |[AB,AC,AD]| / 6
+[a,b,c]=0 ⟺ a,b,c coplanar (linearly dependent)
+[a,b,c] > 0 ⟺ (a,b,c) right-oriented</div>
+    <div class="label">Euler-Rodrigues (rotation by θ around unit axis v)</div>
+    <div class="formula ch4">Rot_{v,θ}(x) = cos(θ)x + sin(θ)(v×x) + (1−cosθ)⟨v,x⟩v</div>
+  </div>
+
+  <div class="card ch4 full">
+    <h2>Volume &amp; Common Perpendicular</h2>
+    <div class="row">
+      <div>
+        <div class="label">Volume formulas</div>
+        <div class="formula ch4">Rectangle a×b:          Area = ab
+Parallelogram (v,w):    Area = |v×w| ... wait, this is E³
+Triangle (base a, h):   Area = ah/2
+Parallelepiped (a,b,c): Vol = |[a,b,c]|
+Pyramid (base A, h):    Vol = Ah/3
+Tetrahedron ABCD:       Vol = |[AB,AC,AD]|/6</div>
+      </div>
+      <div>
+        <div class="label">Common perpendicular of two skew lines ℓ,ℓ′ (A∈ℓ, B∈ℓ′, dir. v, w)</div>
+        <div class="formula ch4">Direction of perp: a = v × w
+Normal of π (contains ℓ):   n  = (v×w)×v
+Normal of π′ (contains ℓ′): n′ = (v×w)×w
+
+π:  |x−xA  y−yA  z−zA|
+    |vx     vy     vz  | = 0
+    |ax     ay     az  |
+
+π′: |x−xB  y−yB  z−zB|
+    |wx     wy     wz  | = 0
+    |ax     ay     az  |
+
+Common perp d = π ∩ π′</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 5 — PROJECTIONS & REFLECTIONS
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch5">Chapter 5 — Affine Maps, Projections &amp; Reflections</h3>
+<div class="grid">
+
+  <div class="card ch5">
+    <h2>Affine Maps &amp; Homogeneous Coordinates</h2>
+    <p>Affine map φ: φ(P) = A·[P]_K + b</p>
+    <p>lin(φ) has matrix A; translation b. Invertible ⟺ A invertible.</p>
+    <div class="label">Homogeneous matrix</div>
+    <div class="formula ch5">M̂(φ) = [A | b]    (n+1)×(n+1) matrix
+            [0 | 1]
+Composition: M̂(ψ∘φ) = M̂(ψ)·M̂(φ)</div>
+    <div class="label">Tensor (outer) product</div>
+    <div class="formula ch5">v ⊗ a = v·aᵀ  (n×n matrix, (v⊗a)ᵢⱼ = vᵢaⱼ)
+(v⊗a)·w = ⟨a,w⟩·v   (orthonormal basis)
+(v⊗a)ᵀ = a⊗v</div>
+    <div class="sep"></div>
+    <p>Proj ∈ End_aff but ∉ AGL (not bijective).</p>
+    <p>Reflections ∈ AGL (bijective).</p>
+    <p>Key relation: <em>Ref = 2·Pr − Id</em></p>
+  </div>
+
+  <div class="card ch5">
+    <h2>Projection &amp; Reflection on Hyperplane H</h2>
+    <p>H: a₁x₁+···+aₙxₙ+aₙ₊₁=0, direction v (not ∥ H)</p>
+    <div class="label">Projection onto H parallel to v</div>
+    <div class="formula ch5">Pr_{H,v}(P) = (Iₙ − v·aᵀ/(vᵀ·a))·P − (aₙ₊₁/(vᵀ·a))·v
+lin part: Iₙ − (v⊗a)/⟨v,a⟩</div>
+    <div class="label">Reflection in H parallel to v</div>
+    <div class="formula ch5">Ref_{H,v}(P) = (Iₙ − 2v·aᵀ/(vᵀ·a))·P − (2aₙ₊₁/(vᵀ·a))·v
+lin part: Iₙ − 2(v⊗a)/⟨v,a⟩</div>
+    <div class="label">Orthogonal versions (v = a = normal)</div>
+    <div class="formula ch5">Pr⊥_H(P) = (Iₙ − a⊗a/|a|²)·P − (aₙ₊₁/|a|²)·a
+Ref⊥_H(P) = (Iₙ − 2a⊗a/|a|²)·P − (2aₙ₊₁/|a|²)·a</div>
+  </div>
+
+  <div class="card ch5">
+    <h2>Projection &amp; Reflection on Line ℓ</h2>
+    <p>ℓ: dir. v, through Q. W = direction space of projection (W: aᵀx=0, W not ∥ ℓ)</p>
+    <div class="label">Projection onto ℓ parallel to W</div>
+    <div class="formula ch5">Pr_{ℓ,W}(P) = (v·aᵀ/(vᵀ·a))·P + (Iₙ−v·aᵀ/(vᵀ·a))·Q
+lin part: (v⊗a)/⟨v,a⟩</div>
+    <div class="label">Reflection in ℓ parallel to W</div>
+    <div class="formula ch5">Ref_{ℓ,W}(P) = (2v·aᵀ/(vᵀ·a)−Iₙ)·P + 2(Iₙ−v·aᵀ/(vᵀ·a))·Q
+lin part: 2(v⊗a)/⟨v,a⟩ − Iₙ</div>
+    <div class="label">Orthogonal versions (W ⊥ ℓ, so v=a=dir. of ℓ)</div>
+    <div class="formula ch5">Pr⊥_ℓ(P)  = (a⊗a/|a|²)·P + (Iₙ−a⊗a/|a|²)·Q
+Ref⊥_ℓ(P) = (2a⊗a/|a|²−Iₙ)·P + 2(Iₙ−a⊗a/|a|²)·Q</div>
+  </div>
+
+  <div class="card ch5">
+    <h2>How to Apply (Method II)</h2>
+    <p>Given H: x+y−1=0 and v(2,1):</p>
+    <div class="label">Step 1: identify a, aₙ₊₁, v</div>
+    <div class="formula ch5">a = (1,1),  aₙ₊₁ = −1,  v = (2,1)</div>
+    <div class="label">Step 2: compute vᵀ·a (scalar)</div>
+    <div class="formula ch5">vᵀ·a = 2·1 + 1·1 = 3</div>
+    <div class="label">Step 3: compute v·aᵀ (matrix)</div>
+    <div class="formula ch5">v·aᵀ = [2]·[1 1] = [2 2]
+       [1]          [1 1]</div>
+    <div class="label">Step 4: plug into formula</div>
+    <div class="formula ch5">Pr = (I − (1/3)[2 2])·P − (−1/3)·[2]
+              [1 1]             [1]
+   = (1/3)[1 −2]·P + (1/3)[2]
+          [−1  2]          [1]</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 6 — ISOMETRIES
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch6">Chapter 6 — Isometries</h3>
+<div class="grid">
+
+  <div class="card ch6">
+    <h2>Affine Form &amp; Orthogonal Matrices</h2>
+    <p>Isometry: d(φ(P),φ(Q))=d(P,Q). Every isometry is affine: φ(x)=Ax+b.</p>
+    <div class="label">Characterization</div>
+    <div class="formula ch6">φ isometry ⟺ A⁻¹=Aᵀ ⟺ AᵀA=Iₙ  (A orthogonal)
+det(A)=±1
+det(A)=+1: direct isometry (displacement)
+det(A)=−1: indirect isometry</div>
+    <div class="label">Rotation matrix SO(2) — all elements</div>
+    <div class="formula ch6">Rθ = [cosθ  −sinθ]   det=+1
+     [sinθ   cosθ]
+cos θ = tr(lin(φ)) / 2</div>
+    <div class="label">Rotation around point C(c₁,c₂) in E²</div>
+    <div class="formula ch6">Homogeneous matrix = T_C · Rθ · T_{−C}
+[cosθ  −sinθ  −c₁cosθ+c₂sinθ+c₁]
+[sinθ   cosθ  −c₁sinθ−c₂cosθ+c₂]
+[0      0      1                 ]</div>
+  </div>
+
+  <div class="card ch6">
+    <h2>Classification in E²</h2>
+    <div class="label">Chasles' theorem — direct (det A = +1)</div>
+    <div class="formula ch6">A = I₂, b = 0     →  identity
+A = I₂, b ≠ 0     →  translation by b
+A = Rθ, θ ≠ 0     →  rotation (unique fixed point p):
+                       b = (I₂−Rθ)p
+                       cos θ = tr(A)/2</div>
+    <div class="label">Indirect (det A = −1)</div>
+    <div class="formula ch6">reflection in line ℓ  (if no translation along ℓ)
+glide-reflection in ℓ  (= reflection + translation ∥ ℓ)
+Lemma: Rθ · Ref⊥_{Ox} = reflection in y=tan(θ/2)·x</div>
+  </div>
+
+  <div class="card ch6">
+    <h2>Rotations in E³</h2>
+    <div class="label">Euler's theorem — rotation around axis Rv</div>
+    <div class="formula ch6">Every A ∈ SO(3) fixes a line (det(A−I₃)=0)
+cos θ = (tr(lin(φ)) − 1) / 2</div>
+    <div class="label">Euler-Rodrigues formula (unit axis v)</div>
+    <div class="formula ch6">Rot_{v,θ}(x)=cos(θ)x+sin(θ)(v×x)+(1−cosθ)⟨v,x⟩v</div>
+    <div class="label">Rotation matrices around axes</div>
+    <div class="formula ch6">Rotx,θ=[1   0      0  ]  Roty,θ=[cosθ  0  sinθ]
+      [0  cosθ −sinθ]         [0     1   0  ]
+      [0  sinθ  cosθ]         [−sinθ 0  cosθ]
+
+Rotz,θ=[cosθ −sinθ  0]
+       [sinθ  cosθ  0]
+       [0      0    1]</div>
+    <div class="label">Euler angles: any SO(3) matrix = Rotz,γ · Rotx,β · Rotz,α</div>
+    <div class="formula ch6">α,β,γ ∈ [0,2π)×[0,π)×[0,2π) → unique rotation</div>
+  </div>
+
+  <div class="card ch6">
+    <h2>Classification in E³ &amp; Surfaces of Revolution</h2>
+    <div class="label">Chasles — direct (det A = +1)</div>
+    <div class="formula ch6">identity | translation | rotation | glide-rotation
+(glide-rotation = rotation + translation ∥ axis)</div>
+    <div class="label">Indirect (det A = −1)</div>
+    <div class="formula ch6">reflection in plane π
+glide-reflection in π  (+ translation ∥ π)
+rotation-reflection     (+ rotation ⊥ π)</div>
+    <div class="label">Surface of revolution</div>
+    <div class="formula ch6">Rotate a curve around axis ℓ using Rotₓ,β (or similar):
+Sphere: rotate circle (cosα, sinα, 0) around x-axis
+  → (cosα, cosβsinα, sinβsinα)
+Cylinder: translate line, or rotate ∥ line
+Hyperboloid: rotate skew line around z-axis</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 8 — CONICS
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch8">Chapter 8 — Conics (Quadratic Curves in E²)</h3>
+<div class="grid">
+
+  <div class="card ch8 full">
+    <h2>The Three Conics</h2>
+    <table>
+      <tr><th>Conic</th><th>Geometric definition</th><th>Canonical equation</th><th>Parameters</th><th>Eccentricity</th></tr>
+      <tr><td>Ellipse E_{a,b}</td><td>|PF₁|+|PF₂|=2a</td><td>x²/a²+y²/b²=1  (a≥b>0)</td><td>c²=a²−b²,  F₁=(c,0), F₂=(−c,0)</td><td>ε=c/a ∈ [0,1)</td></tr>
+      <tr><td>Hyperbola H_{a,b}</td><td>||PF₁|−|PF₂||=2a</td><td>x²/a²−y²/b²=1</td><td>c²=a²+b²,  F₁=(c,0), F₂=(−c,0)</td><td>ε=c/a > 1</td></tr>
+      <tr><td>Parabola P_p</td><td>d(P,F)=d(P,directrix)</td><td>y²=2px  (p>0)</td><td>F=(p/2,0), directrix x=−p/2</td><td>ε=1</td></tr>
+    </table>
+    <div class="row" style="margin-top:10px;">
+      <div>
+        <div class="label">Tangent at point (x₀,y₀) on conic</div>
+        <div class="formula ch8">Ellipse:   x₀x/a² + y₀y/b² = 1
+Hyperbola: x₀x/a² − y₀y/b² = 1
+Parabola:  y₀y = p(x+x₀)</div>
+      </div>
+      <div>
+        <div class="label">Tangent with slope k</div>
+        <div class="formula ch8">Ellipse:   y = kx ± √(a²k²+b²)
+Hyperbola: y = kx ± √(a²k²−b²)  (|k|>b/a)
+Parabola:  y = kx + p/(2k)       (k≠0)</div>
+      </div>
+      <div>
+        <div class="label">Parametric equations</div>
+        <div class="formula ch8">Ellipse:  (a·cos t, b·sin t)
+Hyperbola:(±a·cosh t, b·sinh t)
+Parabola: (y²/(2p), y)  or  (t²/(2p), t)</div>
+      </div>
+      <div>
+        <div class="label">Reflective properties</div>
+        <div class="formula ch8">Ellipse:  tangent = exterior ∡-bisector of ∡F₁PF₂
+Hyperbola:tangent = bisector of ∡F₁PF₂
+Parabola: ray from F → reflected ∥ to axis</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 9 — CLASSIFICATION
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch9">Chapter 9 — Classification of Conics (Isometric &amp; Invariants)</h3>
+<div class="grid">
+
+  <div class="card ch9">
+    <h2>Setup &amp; Reduction Algorithm</h2>
+    <p>General conic: C: q₁₁x²+2q₁₂xy+q₂₂y²+2b₁x+2b₂y+c=0</p>
+    <div class="label">Matrices</div>
+    <div class="formula ch9">Q = [q₁₁  q₁₂]   (symmetric matrix of quadratic part)
+    [q₁₂  q₂₂]
+
+Q̂ = [q₁₁  q₁₂  b₁]  (extended symmetric matrix)
+    [q₁₂  q₂₂  b₂]
+    [b₁   b₂   c ]</div>
+    <div class="label">Algorithm: reduce to canonical form</div>
+    <div class="formula ch9">Step 1 – Rotation: find eigenvalues λ₁,λ₂ of Q
+  eigenvectors → orthonormal basis B′ ∈ SO(2)
+  equation becomes: λ₁x′²+λ₂y′²+v₁x′+v₂y′+c=0
+
+Step 2 – Translation: complete the square for λᵢ≠0
+  → λ₁x″²+λ₂y″²=k   or   λ₁x″²+v₂y″=k
+
+Step 3 – (optional) swap axes to get canonical form</div>
+    <div class="label">Computing M_{B,B′}: columns = eigenvectors in B</div>
+    <div class="formula ch9">Ensure det(M_{B,B′}) = +1 (flip sign of one eigenvector if needed)
+New eq: λ₁x′²+λ₂y′²+bM_{B,B′}[x′,y′]ᵀ+c = 0</div>
+  </div>
+
+  <div class="card ch9">
+    <h2>Isometric Invariants &amp; Classification Table</h2>
+    <div class="label">Three invariants (unchanged under displacements)</div>
+    <div class="formula ch9">D̂ = det(Q̂)    D = det(Q)    T = tr(Q) = λ₁+λ₂</div>
+    <table>
+      <tr><th>D̂</th><th>D</th><th>D̂·T</th><th>Curve</th></tr>
+      <tr><td>D̂=0</td><td>D>0</td><td>—</td><td>Point</td></tr>
+      <tr><td>D̂=0</td><td>D=0</td><td>—</td><td>Two lines or ∅</td></tr>
+      <tr><td>D̂=0</td><td>D&lt;0</td><td>—</td><td>Two real lines</td></tr>
+      <tr><td>D̂≠0</td><td>D>0</td><td>D̂T&lt;0</td><td><em>Ellipse</em></td></tr>
+      <tr><td>D̂≠0</td><td>D>0</td><td>D̂T>0</td><td>Empty set (imag. ellipse)</td></tr>
+      <tr><td>D̂≠0</td><td>D=0</td><td>—</td><td><em>Parabola</em></td></tr>
+      <tr><td>D̂≠0</td><td>D&lt;0</td><td>—</td><td><em>Hyperbola</em></td></tr>
+    </table>
+    <div class="label">Lagrange's method (affine, faster)</div>
+    <div class="formula ch9">Step 1: complete square to eliminate xy term
+Step 2: complete square to eliminate linear terms
+→ get ax²+by²+c=0  or  ax²+by+c=0
+→ identify from affine classification table</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHAPTER 10 — QUADRICS
+══════════════════════════════════════════════════════════ -->
+<h3 class="chapter-title ch10">Chapter 10 — Canonical Quadrics in E³</h3>
+<div class="grid">
+
+  <div class="card ch10">
+    <h2>Ellipsoid &amp; Elliptic Cone</h2>
+    <div class="label">Ellipsoid E_{a,b,c}</div>
+    <div class="formula ch10">x²/a²+y²/b²+z²/c² = 1
+Tangent at p:  xₚx/a²+yₚy/b²+zₚz/c² = 1
+Cross-sections: z=h → ellipse (or point/∅)
+Param: (a cosθ₁cosθ₂, b sinθ₁cosθ₂, c sinθ₂)</div>
+    <div class="label">Elliptic Cone C_{a,b,c}</div>
+    <div class="formula ch10">x²/a²+y²/b²−z²/c² = 0
+Tangent at p:  xₚx/a²+yₚy/b²−zₚz/c² = 0
+z=h: ellipses;  z=0: vertex (point)
+SINGLY RULED: lines {(tx₀,ty₀,tz₀): t∈ℝ} ⊆ C
+Param: (ha cosθ, hb sinθ, hc),  θ∈[0,2π), h∈ℝ</div>
+  </div>
+
+  <div class="card ch10">
+    <h2>Hyperboloid of One Sheet</h2>
+    <div class="formula ch10">x²/a²+y²/b²−z²/c² = 1
+Tangent at p:  xₚx/a²+yₚy/b²−zₚz/c² = 1
+z=h: ellipses;  y=h: hyperbolas (or 2 lines at z=±c)
+Asymptotic cone: x²/a²+y²/b²−z²/c²=0</div>
+    <div class="label">DOUBLY RULED — two families L₁, L₂</div>
+    <div class="formula ch10">Factor: (x/a−z/c)(x/a+z/c) = (1−y/b)(1+y/b)
+Family L₁ (param α):
+  lα: { α(x/a−z/c) = 1−y/b
+       { α(x/a+z/c) = 1+y/b
+Family L₂ (param α):
+  l̃α:{ α(x/a−z/c) = 1+y/b
+       { α(x/a+z/c) = 1−y/b</div>
+    <div class="label">Parametrization</div>
+    <div class="formula ch10">σ(θ₁,θ₂) = (a cosh(θ₂)cos(θ₁), b cosh(θ₂)sin(θ₁), c sinh(θ₂))</div>
+  </div>
+
+  <div class="card ch10">
+    <h2>Hyperbolic Paraboloid (Saddle)</h2>
+    <div class="formula ch10">x²/a − y²/b − 2z = 0
+Tangent at p:  xₚx/a − yₚy/b − zₚ − z = 0
+z=h: hyperbolas;  x=h or y=h: parabolas
+z=0: two lines (saddle point at origin)</div>
+    <div class="label">DOUBLY RULED — two families</div>
+    <div class="formula ch10">Factor: (x/√a−y/√b)(x/√a+y/√b) = 2z
+Family L₁ (param λ/µ=α):
+  lα:{ α(x/√a−y/√b) = 2µz,  µ(x/√a+y/√b) = λ
+Family L₂: swap signs
+Param: σ(θ₁,θ₂) = (√a·θ₁, √b·θ₂, (θ₁²−θ₂²)/2)</div>
+  </div>
+
+  <div class="card ch10">
+    <h2>Tangent Planes — General Method</h2>
+    <p>Works for all quadrics. Let φ(x,y,z) = defining function (=const).</p>
+    <div class="label">Step 1: parametrize line through p</div>
+    <div class="formula ch10">l = p + tv = (xₚ+tvx, yₚ+tvy, zₚ+tvz)</div>
+    <div class="label">Step 2: substitute into φ(l)=const</div>
+    <div class="formula ch10">get: [coeff t²]·t² + [coeff t]·t = 0</div>
+    <div class="label">Step 3: tangency ⟺ t=0 double root</div>
+    <div class="formula ch10">⟺  coeff of t = 0
+This gives the condition on v → tangent plane eq.</div>
+    <div class="label">Gradient method (equivalent)</div>
+    <div class="formula ch10">Tp S: ∇φ(p) · (x−p) = 0
+where ∇φ = (∂φ/∂x, ∂φ/∂y, ∂φ/∂z)</div>
+    <div class="sep"></div>
+    <table>
+      <tr><th>Surface</th><th>Equation</th><th>Ruled?</th></tr>
+      <tr><td>Ellipsoid</td><td>x²/a²+y²/b²+z²/c²=1</td><td>No</td></tr>
+      <tr><td>Cone</td><td>x²/a²+y²/b²−z²/c²=0</td><td>Singly</td></tr>
+      <tr><td>Hyperb. 1 sheet</td><td>x²/a²+y²/b²−z²/c²=1</td><td>Doubly</td></tr>
+      <tr><td>Hyperb. paraboloid</td><td>x²/a−y²/b=2z</td><td>Doubly</td></tr>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
